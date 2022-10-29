@@ -1,0 +1,62 @@
+# O progama da erro se nao for inserida uma data nao valida (data nao certa),nao tendo
+# condiçao de avaliar(esta pronta mas falta implementar so utilizando a condiçao de ver
+# se a data esta certa e se nao dar exit no script)  e parar a operaçao se esta (data
+# nao valida) for inserida  
+# A lista MONTHDAYS esta como varivael global, como esta sempre a repetir nao tendo de
+# escrever outra vez escrevia fora das funçoes(reduzir o tamanho do codigo)
+MONTHDAYS = (0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+# isLeapYear(year) True or False
+def isLeapYear(year):
+   return year%4 == 0  and (year%100!= 0 or  year%400 == 0)
+
+# monthDays day of month
+def monthDays(year, month):
+   if not(isLeapYear(year)) and month == 2 :
+        days = MONTHDAYS[month] - 1
+   else:
+        days = MONTHDAYS[month]
+   return days
+
+
+# nextDay next day
+def nextDay(year, month, day):
+   day += 1
+   if day > MONTHDAYS[month] and month != 12:
+        month = month +1
+        day = 1
+   elif day > MONTHDAYS[month] and month == 12 :
+        year += 1
+        month = 1
+        day = 1
+   return year, month, day
+
+
+
+# dateisvalid true or false
+def dateIsValid(year,moth,day):
+    if day <= monthDays(year,moth):
+        return True
+    else:
+        return False
+       
+#previousdayr the previous day
+def previousDay(year,month,day):
+   day -= 1    
+   if day == 0 and month != 1:
+        day = monthDays(year,month-1)
+        return year,month-1,day
+   elif day == 0 and month == 1:
+        day = MONTHDAYS[12]
+        month = 12
+        year -= 1
+        return year,month,day
+   else:
+        return year,month,day
+def main():
+   year1 = int(input("year "))
+   month1 = int(input("month "))
+   day1 = int(input("day "))
+   print("\n",isLeapYear(year1),"\n",monthDays(year1,month1),"\n",nextDay(year1,month1,day1),"\n",
+      previousDay(year1,month1,day1),"\n",dateIsValid(year1,month1,day1))
+
+main()
